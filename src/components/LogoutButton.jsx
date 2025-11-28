@@ -15,7 +15,8 @@ function LogoutButton() {
         try {
           const resp = await axios.post(
             `${API_URL}/auth/logout`,
-            { withCredentials: true }
+            {},
+            { withCredentials:true}
           );
 
           console.log(resp);
@@ -29,6 +30,7 @@ function LogoutButton() {
           
           toast.info("logged out");
           console.log("after toast notify");
+
           setTimeout(()=> {navigate("/")},5000);
         } catch (error) {
           toast.error(error.message);
@@ -40,13 +42,13 @@ function LogoutButton() {
     <div>
       <p 
         onClick={handleLogout} 
-        className='hover:underline hover:text-red-500'
+        className='hover:text-red-500'
       >
         Logout
       </p>
     </div>
     <div>
-    <ToastContainer position="bottom-right" autoClose={3000} />
+      <ToastContainer position="bottom-right" autoClose={2000}/>
     </div>
   </>
   )

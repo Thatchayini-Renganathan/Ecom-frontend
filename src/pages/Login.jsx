@@ -20,7 +20,7 @@ function Login() {
     
     const handleEmailChange = (e) => { setEmail(e.target.value); }
     const handlePasswordChange = (e) => { setPassword(e.target.value); }
-    const handleGoogleLogin = () => {window.location.href = `${API_URL}/oauth2/authorization/google`;}
+    const handleGoogleLogin = () => {window.location.href = `${API_URL}/oauth2/authorization/google`;}//not implemented
 
     const { setIsAuthenticated,setUser} = useContext(AuthContext);
 

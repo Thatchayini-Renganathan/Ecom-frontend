@@ -5,6 +5,8 @@ import Login from './pages/Login'
 import { Home } from 'lucide-react'
 import Signup from './pages/Signup'
 import ForgotPassword from './pages/ForgotPassword'
+import SellerDashboard from './pages/SellerDashboard'
+import SellerHomePage from './pages/SellerHomePage'
 function App() {
 
   return (
@@ -17,6 +19,8 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/signup' element={<Signup/>}/>
         </Route>
+        <Route path='/seller' element={<SellerHomePage/>}/>
+        <Route path='/seller-dash' element={<SellerDashboard/>}/>
       </Routes>
     </Router>
     </>
