@@ -7,22 +7,26 @@ import Signup from './pages/Signup'
 import ForgotPassword from './pages/ForgotPassword'
 import SellerDashboard from './pages/SellerDashboard'
 import SellerHomePage from './pages/SellerHomePage'
+import SellerSingupPage from './pages/SellerSingupPage'
+import ProtectedRoute from './components/ProtectedRoute'
 function App() {
 
   return (
     <>
-    <Router>
       <Routes>
         <Route element={<MainLayout/>}>
           <Route path='/' element={<Home/>}/>
-          <Route path='/forgot-password' element={<ForgotPassword/>}/>
-          <Route path='/login' element={<Login/>}/>
-          <Route path='/signup' element={<Signup/>}/>
+          <Route path='/auth/forgot-password' element={<ForgotPassword/>}/>
+          <Route path='/auth/login' element={<Login/>}/>
+          <Route path='/auth/signup' element={<Signup/>}/>
         </Route>
+
         <Route path='/seller' element={<SellerHomePage/>}/>
-        <Route path='/seller-dash' element={<SellerDashboard/>}/>
+        <Route path='/seller/createAccount' element={<SellerSingupPage/>}/>
+        <Route element={<ProtectedRoute requiredRole="seller"/>}>
+            <Route path='/seller/dashboard' element={<SellerDashboard/>}/>
+        </Route>
       </Routes>
-    </Router>
     </>
   )
 }

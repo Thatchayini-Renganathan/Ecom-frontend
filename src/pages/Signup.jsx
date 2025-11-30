@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import signup from "/src/assets/signup.jpg";
 import Footer from "@/components/Footer";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/context/ToastProvider";
+import api from "@/api/axiosConfig";
 
 function Signup() {
-  const API_URL = import.meta.env.VITE_API_URL;
-
+  
+  const toast = useToast();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -50,7 +50,7 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post(`${API_URL}/auth/signup/customer`, {
+      const response = await api.post(`/auth/signup/customer`, {
         name,
         email,
         password,
@@ -177,9 +177,6 @@ function Signup() {
         </div>
       </div>
       <Footer />
-      <div>
-        <ToastContainer position="bottom-right" autoClose={3000} />
-      </div>
     </>
   );
 }

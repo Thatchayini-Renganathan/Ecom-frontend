@@ -1,17 +1,16 @@
 import React, { useState,useContext } from "react";
 import { Card, CardTitle, CardHeader } from "@/components/ui/card";
 import { IoCloseOutline } from "react-icons/io5";
-import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import { Loader2 } from "lucide-react";
 import { AuthContext } from "@/context/AuthProvider";
 import { useNavigate } from "react-router-dom";
+import api from "@/api/axiosConfig";
+import { useToast } from "@/context/ToastProvider";
 
 function SellerLoginForm({ closeForm }) {
 
-  const API_URL = import.meta.env.VITE_API_URL;
-
+  const toast = useToast();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,14 +25,12 @@ function SellerLoginForm({ closeForm }) {
     e.preventDefault();
 
     try {
-          const response = await axios.post(
-            `${API_URL}/auth/login`,
+          const response = await api.post(`/auth/login`,
             {
               email: email,
               password: password,
               type: "jwt",
-            },
-            { withCredentials: true }
+            }
           );
     
           const { name, userId, role, loggedIn } = response.data;
@@ -44,7 +41,7 @@ function SellerLoginForm({ closeForm }) {
     
           setTimeout(() => {
             setLoading(true);
-            setTimeout(() => navigate("/"), 2000);
+            setTimeout(() => navigate("/"), 2000);//seller dashboard route should be added here
           }, 1000);
         } catch (error) {
           if (error.response) {
@@ -69,7 +66,7 @@ function SellerLoginForm({ closeForm }) {
       <Card className="h-95 w-120 mx-auto">
         <CardHeader className="flex justify-between">
           <CardTitle className="mt-1 font-semibold">Login</CardTitle>
-          <span onClick={closeForm}>
+          <span onClick={closeForm} className="cursor-pointer">
             <IoCloseOutline size={25} />
           </span>
         </CardHeader>
@@ -78,7 +75,7 @@ function SellerLoginForm({ closeForm }) {
             Email
           </label>
           <input
-            type="text"
+            type="email"
             name="email"
             id="email"
             value={email}
@@ -102,19 +99,20 @@ function SellerLoginForm({ closeForm }) {
           />
           <button
             type="submit"
-            className="mx-auto my-3 rounded bg-my-colour w-90 h-10 font-semibold hover:bg-orange-400 transition-transform hover:scale-105"
+            className="text-white mx-auto my-3 rounded bg-my-colour w-90 h-10 font-semibold hover:bg-orange-400 transition-transform hover:scale-105"
           >
             Login
           </button>
         </form>
         <div className="flex gap-2 mx-auto">
           <p>Dont have an account?</p>
-          <span className="hover:underline text-blue-700">Create account</span>
+          <span 
+            onClick={()=>navigate("/seller/createAccount")} 
+            className="hover:underline text-blue-700 cursor-pointer">
+              Create account
+          </span>
         </div>
       </Card>
-    </div>
-    <div>
-        <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
     </>
   );

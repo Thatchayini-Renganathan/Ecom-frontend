@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import Footer from '@/components/Footer';
-import {ToastContainer,toast} from 'react-toastify';
-import axios from 'axios';
+import api from '@/api/axiosConfig';
+import { useToast } from '@/context/ToastProvider';
 
 function ForgotPassword() {
 
-  const API_URL = import.meta.env.VITE_API_URL;
+  const toast = useToast();
 
   const[email,setEmail] = useState("");
   const[password,setPassword] = useState("");
@@ -33,7 +33,7 @@ function ForgotPassword() {
         }
   
         try {
-            const response = await axios.patch(`${API_URL}/auth/forgot-password`,{
+            const response = await api.patch(`/auth/forgot-password`,{
                 email,
                 password
             });
@@ -126,9 +126,6 @@ function ForgotPassword() {
   </div>
 </section>
 <Footer/>
-<div>
-  <ToastContainer position="bottom-right" autoClose={3000} />
-</div>
 </>
   )
 }

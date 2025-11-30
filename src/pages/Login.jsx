@@ -2,17 +2,18 @@ import React, { useContext } from 'react'
 import { useState } from 'react';
 import google from "/src/assets/google.png";
 import { useNavigate } from "react-router-dom";
-import {ToastContainer,toast} from 'react-toastify'
 import Footer from '@/components/Footer';
-import axios from 'axios';
 import "react-toastify/dist/ReactToastify.css";
 import { Loader2 } from "lucide-react";
 import { AuthContext } from '@/context/AuthProvider';
+import { useToast } from '@/context/ToastProvider';
+import api from '@/api/axiosConfig';
 
 function Login() {
 
     const API_URL = import.meta.env.VITE_API_URL;
     
+    const toast = useToast();
     const navigate = useNavigate();
     const[email,setEmail] = useState("");
     const[password,setPassword] = useState("");
@@ -29,12 +30,11 @@ function Login() {
         e.preventDefault();
 
         try {
-            const response = await axios.post(`${API_URL}/auth/login`,{
+            const response = await api.post(`/auth/login`,{
                 email: email,
                 password: password,
                 type: "jwt"
-            },
-            {withCredentials:true});
+            });
             
             const{name,userId,role,loggedIn}=response.data;
             setIsAuthenticated(loggedIn);
@@ -134,9 +134,6 @@ function Login() {
   </div>
   </div>
   <Footer/>
-  <div>
-    <ToastContainer position="bottom-right" autoClose={3000} />
-  </div>
     </>
   )
 }
